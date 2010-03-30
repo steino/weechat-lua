@@ -15,6 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ]]
 
+QL = {
+	["VERSION"] = "0.1",
+	["AUTHOR"] = "steino",
+	["LICENSE"] = "Apache-2.0",
+	["DESC"] = "Nowplaying script for Quodlibet",
+	["NAME"] = "np_quodlibet"
+}
+
 function parse(file)
 	local out = {}
 	file = assert(io.open(file, "r"))
@@ -41,11 +49,5 @@ function np(data, buffer, args)
 	end
 end
 
-weechat.register("np_quodlibet", "steino", "0.1", "Apache-2.0", "Nowplaying script for Quod Libet", "", "")
-weechat.hook_command("np",
-"Prints the current song to current buffer.",
-"",
-"",
-"",
-"np",
-"")
+weechat.register(QL["NAME"], QL["AUTHOR"], QL["VERSION"], QL["LICENSE"], QL["DESC"], "", "")
+weechat.hook_command("np", "Prints the current song to current buffer.", "", "", "", "np", "")
