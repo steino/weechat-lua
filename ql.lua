@@ -45,11 +45,18 @@ end
 function np(data, buffer, args)
 	local int = weechat.buffer_get_integer(buffer, "number")
 	local data = parse(os.getenv("HOME") .. "/.quodlibet/current")
+	local artist
 	if data then
-		if int == 1 then
-			weechat.print(buffer, string.format("np: %s - [%s] %s (%s/%s)", data["artist"], data["album"], data["title"], data["ttime"], data["format"]))
+		if data["albumartist"] and data["artist"] ~= data["albumartist"] then
+			artist = data["albumartist"] .. ", " .. data["artist"]
 		else
-			weechat.command(buffer, string.format("np: %s - [%s] %s (%s/%s)", data["artist"], data["album"], data["title"], data["ttime"], data["format"]))
+			artist = data["artist"]
+		end
+		
+		if int == 1 then
+			weechat.print(buffer, string.format("np: %s - [%s] %s (%s/%s)", artist, data["album"], data["title"], data["ttime"], data["format"]:lower()))
+		else
+			weechat.command(buffer, string.format("np: %s - [%s] %s (%s/%s)", artist, data["album"], data["title"], data["ttime"], data["format"]:lower()))
 		end
 	else
 		weechat.print(buffer, "Could not open file, is quodlibet running?")
